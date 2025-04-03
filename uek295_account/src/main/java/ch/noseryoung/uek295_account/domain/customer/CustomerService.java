@@ -1,33 +1,18 @@
 package ch.noseryoung.uek295_account.domain.customer;
 
-import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
+import ch.noseryoung.uek295_account.exceptions.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.NoSuchElementException;
-import java.util.UUID;
 
-@Log4j2
 @Service
+@RequiredArgsConstructor
 public class CustomerService {
-    private final CustomerRepository repository;
-
-    @Autowired
-    public CustomerService(CustomerRepository repository) {
-        this.repository = repository;
-    }
+    private final CustomerRepository customerRepo;
 
     public Customer createCustomer(Customer customer) {
-        if (customer.getAccount() == null) {
-            log.error("Customer creation failed: No linked account");
-            throw new IllegalArgumentException("Customer must have an account");
+        if (customer.getAccounts() == null || customer.getAccounts().isEmpty()) {
+            throw new InvalidEntityException("Account required");
         }
-        return repository.save(customer);
-    }
-
-    public Customer getCustomerByAccountId(UUID accountId) {
-        return repository.findByAccountId(accountId).orElseThrow(() -> {
-            log.error("Customer for Account ID {} not found", accountId);
-            return new NoSuchElementException("Customer not found for this account");
-        });
+        return customerRepo.save(customer);
     }
 }

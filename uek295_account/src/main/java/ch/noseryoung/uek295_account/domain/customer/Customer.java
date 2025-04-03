@@ -1,19 +1,19 @@
 package ch.noseryoung.uek295_account.domain.customer;
 
 import ch.noseryoung.uek295_account.domain.account.Account;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.*;
+import lombok.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "customers")
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -21,16 +21,15 @@ public class Customer {
     private UUID id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Name cannot be blank")
+    @NotBlank
     private String name;
 
     private String phone;
 
-    @Past(message = "Birthday must be in the past")
+    @Past
     private LocalDate birthday;
 
-    @OneToOne
-    @JoinColumn(name = "account_id", nullable = false, unique = true)
-    @NotNull(message = "Account cannot be null")
-    private Account account;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Account> accounts;
 }

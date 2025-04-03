@@ -1,76 +1,38 @@
 package ch.noseryoung.uek295_account.domain.account;
 
-import ch.noseryoung.uek295_account.exceptions.InvalidEntityException;
 import ch.noseryoung.uek295_account.exceptions.ResourceNotFoundException;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-@Slf4j
 @Service
+@RequiredArgsConstructor
 public class AccountService {
-    private final AccountRepository repository;
-
-    @Autowired
-    public AccountService(AccountRepository repository) {
-        this.repository = repository;
-    }
+    private final AccountRepository accountRepository;
 
     public Account createAccount(Account account) {
-        validateAccount(account);
-        account.setCreatedAt(LocalDateTime.now());
-
-        try {
-            return repository.save(account);
-        } catch (DataIntegrityViolationException e) {
-            log.error("Account creation failed: Email already exists");
-            throw new InvalidEntityException("Email already in use");
-        }
-    }
-
-    public Account getAccountById(UUID id) {
-        return repository.findById(id)
-                .orElseThrow(() -> {
-                    log.warn("Account with ID {} not found", id);
-                    return new ResourceNotFoundException("Account", id);
-                });
+        return accountRepository.save(account);
     }
 
     public List<Account> getAllAccounts() {
-        return repository.findAll();
+        return accountRepository.findAll();
     }
 
-    public Account updateAccount(UUID id, Account accountDetails) {
-        Account account = getAccountById(id); // Reuses the existing exception handling
+    public Account getAccountById(UUID id) {
+        return accountRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Account", id));
+    }
 
-        if (accountDetails.getEmail() != null) {
-            account.setEmail(accountDetails.getEmail());
-        }
-        if (accountDetails.getPassword() != null) {
-            account.setPassword(accountDetails.getPassword());
-        }
-
-        return repository.save(account);
+    public Account updateAccount(UUID id, Account updatedAccount) {
+        Account existingAccount = getAccountById(id);
+        existingAccount.setEmail(updatedAccount.getEmail());
+        existingAccount.setPassword(updatedAccount.getPassword());
+        return accountRepository.save(existingAccount);
     }
 
     public void deleteAccount(UUID id) {
-        if (!repository.existsById(id)) {
-            log.warn("Delete failed: Account {} not found", id);
-            throw new ResourceNotFoundException("Account", id);
-        }
-        repository.deleteById(id);
-    }
-
-    private void validateAccount(Account account) {
-        if (account.getEmail() == null || account.getEmail().isBlank()) {
-            throw new InvalidEntityException("Email is required");
-        }
-        if (account.getPassword() == null || account.getPassword().isBlank()) {
-            throw new InvalidEntityException("Password is required");
-        }
+        Account account = getAccountById(id);
+        accountRepository.delete(account);
     }
 }
