@@ -1,0 +1,132 @@
+{
+	"info": {
+		"_postman_id": "ce3f9ce6-37da-4aaf-b6ec-1a38153f3906",
+		"name": "ÜK 295",
+		"description": "This is my project for the ük295. I had account -> customer\n\nI have chosen for account to be the full entity with controller\n\nFollowing things are only possible in the data.sql file for now\n\n- create a customer\n    \n- update a customer\n    \n- deleting a customer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43313899"
+	},
+	"item": [
+		{
+			"name": "accounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/accounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "specific account",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/accounts/{id}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts",
+						"{id}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update account",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"bradNEW@example.com\",\r\n  \"password\": \"brad_password1NEEEW\",\r\n  \"createdAt\": \"2024-04-04T12:00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/accounts/4d9e4567-e89b-12d3-a456-426614174003",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts",
+						"4d9e4567-e89b-12d3-a456-426614174003"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create account to existing customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"newaccount@example.com\",\r\n  \"password\": \"newPassword\",\r\n  \"createdAt\": \"2025-04-03T08:40:54.793Z\",\r\n  \"customer\": {\r\n    \"id\": \"170d1944-b20a-4b74-8d32-14afea98303b\"\r\n  }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/accounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete an account",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/accounts/{id}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts",
+						"{id}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

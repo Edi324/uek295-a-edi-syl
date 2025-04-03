@@ -26,15 +26,32 @@ ON DELETE CASCADE
 
 
 
--- Insert Multiple Accounts for One Customer
-INSERT INTO accounts (account_id, email, password, created_at, customer_id)
-VALUES ('222e4567-e89b-12d3-a456-426614174001', 'Nori@example.com', 'cool_password', '2024-04-03T12:00:00', '111e4567-e89b-12d3-a456-426614174000');
-
-INSERT INTO accounts (account_id, email, password, created_at, customer_id)
-VALUES ('333e4567-e89b-12d3-a456-426614174002', 'john2@example.com', 'hashed_password2', '2024-04-03T13:00:00', '111e4567-e89b-12d3-a456-426614174000');
-
+-- accounts andy
 INSERT INTO customers (customer_id, name, phone, birthday)
-VALUES ('8fdff6f7-f082-4074-af6b-c23db419e10a', 'Regular User', '+417654321', '1995-05-05');
+VALUES ('67233580-4f7e-45ee-98fb-488b41ff51e1', 'andy landy', '7986435636688', '1985-03-15');
 
+INSERT INTO accounts (account_id, email, password, created_at, customer_id)
+VALUES ('1244993f-97d5-4f2b-b31a-36aa74166e6a', 'andysEmail@example.com', 'Andy_password',
+        '2024-04-03T12:00:00', '67233580-4f7e-45ee-98fb-488b41ff51e1');
+
+
+-- accounts for Nori
 INSERT INTO customers (customer_id, name, phone, birthday)
-VALUES ('111e4567-e89b-12d3-a456-426614174000', 'Nori Nori', '123456789', '1990-05-15');
+VALUES ('170d1944-b20a-4b74-8d32-14afea98303b', 'Nori Nori', '123456789', '1990-05-15');
+
+INSERT INTO accounts (account_id, email, password, created_at, customer_id)
+VALUES ('222e4567-e89b-12d3-a456-426614174001', 'nori1@example.com', 'noriPassOne',
+        '2024-04-03T12:00:00', '170d1944-b20a-4b74-8d32-14afea98303b'),
+    ('333e4567-e89b-12d3-a456-426614174002', 'nori2@example.com', 'noriPasTwo',
+     '2024-04-03T13:00:00', '170d1944-b20a-4b74-8d32-14afea98303b');
+
+
+-- accounts for brad
+INSERT INTO customers (customer_id, name, phone, birthday)
+VALUES ('9724c26b-caef-4be3-b0b8-bfdebd0e3d25', 'Brad Bradington', '+417654321', '2000-08-02');
+
+INSERT INTO accounts (account_id, email, password, created_at, customer_id)
+VALUES
+    ('4d9e4567-e89b-12d3-a456-426614174003', 'brad1@example.com', 'brad_password1',
+     '2024-04-04T12:00:00', '9724c26b-caef-4be3-b0b8-bfdebd0e3d25');
+
