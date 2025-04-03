@@ -43,3 +43,32 @@ Bookstore Account & Customer Management System
 ### Additional Notes
 - Do not add extensions without prior agreement. Implement the basic requirements first.
 - Provide documentation in the `README` and Swagger.
+
+# Summary of Endpoints for Account
+
+### GET /accounts
+- Returns a list of all accounts.
+
+### GET /accounts/{account_id}
+- Returns a specific account based on the `account_id` (UUID).
+
+### PUT /accounts/{account_id}
+- Updates an existing account (e.g., email, password).
+
+### POST /accounts
+- Creates a new account and associates it with an existing customer.
+
+### DELETE /accounts/{account_id}
+- Deletes an account based on the `account_id`.
+
+### Notes:
+- **Customer** is managed separately (without its own endpoints) and is referenced through the Account entity.
+- Relationship: Likely **many-to-one** (customer can have multiple accountsr).
+
+### Testing (Postman):
+- Full CRUD operations for Account.
+- Verify the relationship to Customer (e.g., whether POST requires a valid `customer_id`).
+
+### Testing swagger:
+![ANALYZE](https://github.com/Edi324/uek295-a-edi-syl/blob/main/swagger_test.png)
+
